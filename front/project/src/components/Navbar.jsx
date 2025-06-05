@@ -1,50 +1,40 @@
-import React, {useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import {motion} from "framer-motion";
+import {motion} from "motion/react";
 
 const navVariant = {
    hidden : {
-      y: "-250",
+      opacity : 0,
    },
    visible : {
-      y : "0",
+      opacity : 1,
       transition: {
-         delay:"1.5",
+         ease : "easeIn",
+         delay:"2",
          duration:"1.5",
-         type: "spring",
-         stiffness : "120",
       }
    }
 
 }
 
-function Navbar(){
-   const [toggle, setToggleutton] = useState(false)
+export function Navbar(){
 
-   function handleClick(e){
-      setToggleutton(!toggle);
-   }
-    return  <motion.nav className="bg-blue-900 flex relative"
+    return  <motion.nav className="flex my-3 border rounded-3xl"
     variants={navVariant}
     initial = 'hidden'
     animate = 'visible'>
     <div className="w-2/5">
        <span>Website</span>
     </div>
-    <div className={`${toggle? "absolute top-3 left-0 flex flex-row":"hidden" }md:w-3/5 md:justify-end`}>
-    <button className="block md:hidden" onClick={handleClick}> {toggle? "show": "hide"}</button>
-    <ul className="lg:flex justify-end sm:text-center sm:justify-items-end sm:mr-8">
-    <li className="lg:p-8  sm:mt-4 sm:mb-4 sm:text-left">
-      
+    <div className="flex justify-between items-center w-3/5">
+    <li className="border-b-2 hover:border-y-2 hover:bg-amber-50">
        <Link to="/about">About </Link>
     </li> 
-    <li className="lg:p-8  sm:mt-4 sm:mb-4 sm:text-left">
-       <Link to="/contact">Contact</Link>
+    <li className="">
+      <button className = "p-4 border text-center hover:bg-amber-50">
+         <Link to="/login">LOGIN </Link>
+      </button>  
     </li>
-    <li className="lg:p-8 sm:mt-4 sm:mb-4 sm:text-left">
-       <Link to="/login">LOGIN </Link>
-    </li>
-    </ul>
     </div>
    
    

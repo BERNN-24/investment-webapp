@@ -1,10 +1,18 @@
 import React, {useState, useEffect} from "react";
 import Axios from "axios";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+
 
 // COMPONENTS
-import {Hero} from "../components/HeroSection";
+import {Hero} from "../components/homeComponents/HeroSection";
+import { Widget } from "../components/homeComponents/Widget";
+import { HomeAbout } from "../components/homeComponents/Home_About";
+import {Partners} from "../components/homeComponents/Partners.jsx";
+import { CallToAction } from "../components/homeComponents/CallToAction";
+
+import {Footer} from "../components/Footer";
+import {Navbar} from "../components/Navbar";
+
+
 
 function Homepage(){
 
@@ -25,19 +33,18 @@ function Homepage(){
          
         }, []);
 
-        return   <div className="">
-         <main>
+        return   <div className="min-h-[screen]">
+         <main className = "container" >
              <Navbar/>
              <Hero/>
+             <HomeAbout/>
+             <Widget/>
+             <Partners/> 
+             <CallToAction/>
+             <Footer/>
          </main>
         
-        </div>
-         
-        
-
-            
-
-      
+        </div> 
     
 }
 
