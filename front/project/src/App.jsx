@@ -1,6 +1,6 @@
 import React from "react"; 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import {About,Homepage,Login,Dashboard,Signup} from "./pages/AllPages";
+import {About,Homepage,Login,Dashboard,Signup, Avatar} from "./pages/AllPages";
 import { AuthProvider } from "./hooks/Auth_Provider";
 import ProtectedRoute from "./hooks/ProtectedRoute";
 import './App.css'
@@ -13,8 +13,9 @@ function App() {
             <Route path="/" element={<Homepage/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/about" element={<About/>}/>
+            <Route path = "/avatar" element = {<Avatar/>}/>
             <Route path="/dashboard"  element={
-              <ProtectedRoute>
+            <ProtectedRoute>
               <Dashboard/>
             </ProtectedRoute>}/>
             <Route path="/signup" element={<Signup/>}/>

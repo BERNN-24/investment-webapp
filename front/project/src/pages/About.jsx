@@ -32,7 +32,7 @@ function About(){
 
 
 
-    return <div>
+    return <div className="min-h-[screen]">
         <Navbar/>
         {info ? 
         <h1> About {info}</h1> 
