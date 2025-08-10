@@ -16,10 +16,10 @@ export function AuthProvider ( {children}) {
     useEffect( ()=>{
       const reloadAuth =  async ()=>{
             try{
-                const response = await axios.get("/user/verifyAuth", {credentials:"include"})
+                const response = await axios.get("/verifyAuth", {withCredentials:true})
                  if(response.status != 200)
                     {
-                        throw new Error (response)
+                        throw new Error (response.message)
                     }
                      setUser(response.data);
                  } catch(error){ 
@@ -41,4 +41,4 @@ export function AuthProvider ( {children}) {
     
 }
 
-export {useAuth};
+export { useAuth };

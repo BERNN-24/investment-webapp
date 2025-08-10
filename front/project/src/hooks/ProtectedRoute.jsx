@@ -1,9 +1,10 @@
  import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate , Outlet} from "react-router-dom";
 import { useAuth } from "./Auth_Provider";
 
-function ProtectedRoute({children }){
+function   ProtectedRoute({roles}){
     const {user , isLoading} = useAuth();
+    console.log(user);
     
     if (isLoading){
         return <div>
@@ -11,8 +12,12 @@ function ProtectedRoute({children }){
         </div>
       }
       if(!user) return <Navigate to='/login' replace />;
-
-           return {children}
+      // IF USER ACESS IS DENIED, WE DO THE REDIRECTION HERE IF THERE IS A HARD RELOAD
+      if(!user.access) return <Navigate to = "/unauthorized" replace/>
+      // CHECK IF USER ROLE IS admin or user.
+      if(!roles.includes(user.role)) return <Navigate to='/unauthorized' replace />;
+        // If the user is authenticated and has the right role, render the child components
+           return <Outlet />
 
 }
 

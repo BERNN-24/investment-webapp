@@ -5,8 +5,8 @@ export function arePropertiesNotEmpty (obj){
         value == null ||
         value == undefined ||
         value == "") return false
-        if(typeof value ==="string"){
-             return value.trim() !=""  && value.includes("-");
+        if(typeof value =="string"){
+             return value.trim() !="";
         }
     return true;
     });

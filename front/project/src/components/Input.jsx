@@ -5,7 +5,7 @@ function Input(props){
     return <div  className ="grid lg:grid-cols-[1fr_2fr] sm:grid-cols-1 sm:grid-rows-2 gap-1.5 ml-8 mr-8 pt-2 " >
                 <label className="">{props.placeholder} - </label>
                 <input
-                    className="border rounded lg:pt-1 lg:pb-1  hover:in-hover:border-b-gray-400"
+                    className={`w-full px-4 py-2 border border-[#E2D6F3] rounded-lg text-[#1F2937] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#D6B4FC] ${props.className}`}
                         name={props.name}
                         type={props.type}
                         placeholder={props.placeholder}

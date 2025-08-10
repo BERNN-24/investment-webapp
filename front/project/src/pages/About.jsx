@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import Navbar from "../components/Navbar";
 import {useSearchParams} from "react-router-dom";
+import Footer from "../components/Footer";
 import { CallToAction } from "../components/homeComponents/CallToAction";
 
-import {Footer} from "../components/Footer";
 // about info
 import {crypto, forex , stock , about} from "../components/aboutDetails/Details";
 
@@ -32,19 +32,26 @@ function About(){
 
 
 
-    return <div className="min-h-[screen]">
+    return (<div>
         <Navbar/>
-        {info ? 
-        <h1> About {info}</h1> 
-        : 
-         <h2>Welcome to Perennial Welfare Site</h2>
-        }
-        <div>
-            {content}
+         <section className="bg-gradient-to-r from-[#7F00FF] to-[#E100FF] text-white py-12 shadow-md text-center">
+        <h1 className="text-3xl md:text-4xl font-bold tracking-wide capitalize">
+          {info ? `About ${info}` : "Welcome to Perennial Welfare Site"}
+        </h1>
+      </section>
+
+      <main className="max-w-5xl mx-auto px-6 py-10">
+        <div className="bg-white p-6 md:p-10 rounded-2xl shadow-lg space-y-6 prose prose-lg prose-purple max-w-none">
+          {content}
         </div>
+      </main>
         <CallToAction/>
         <Footer/>
-    </div>
+
+    </div>)
 }
 
 export default About;
+
+
+

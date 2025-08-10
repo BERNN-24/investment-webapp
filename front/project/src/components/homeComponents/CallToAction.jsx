@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export function CallToAction() {
   return (
@@ -11,9 +12,11 @@ export function CallToAction() {
     Take care of your financial future!
   </p>
   <div>
+   
     <button className="w-full sm:w-auto bg-white text-[#7F00FF] font-bold py-3 px-8 rounded-md shadow-md hover:bg-purple-100 transition duration-300">
-      Sign Up
+      <Link to="/signup" className="inline-block"> Sign Up</Link>
     </button>
+   
   </div>
 </div>
 

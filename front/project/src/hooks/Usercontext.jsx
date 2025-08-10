@@ -1,18 +1,18 @@
-// import React, {createContext,useContext, useState} from "react";
+import React, {createContext,useContext, useState} from "react";
 
-// const UserContext = createContext();
+const UserContext = createContext();
 
-// function useUser(){
-//     return useContext(UserContext);
-// }
+function useUser(){
+    return useContext(UserContext);
+}
 
-// function UserProvider({children}){
-//     const [thisUser, setThisUser] = useState(null);
+function UserProvider({children}){
+    const [thisUser, setThisUser] = useState(null);
 
-//     return (<UserContext.Provider value={{thisUser, setThisUser}}>
-//         {children}
-//     </UserContext.Provider>);
-// }
+    return (<UserContext.Provider value={{thisUser, setThisUser}}>
+        {children}
+    </UserContext.Provider>);
+}
 
-// export default useUser;
-// export {UserProvider};
+export default useUser;
+export {UserProvider};

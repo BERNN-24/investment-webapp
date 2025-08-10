@@ -3,11 +3,11 @@ import Axios from "axios";
 
 
 // COMPONENTS
-import {Hero} from "../components/homeComponents/HeroSection";
-import { Widget } from "../components/homeComponents/Widget";
-import { HomeAbout } from "../components/homeComponents/Home_About";
+import {Hero} from "../components/homeComponents/HeroSection.jsx";
+import { Widget } from "../components/homeComponents/Widget.jsx";
+import { HomeAbout } from "../components/homeComponents/Home_About.jsx";
 import {Partners} from "../components/homeComponents/Partners.jsx";
-import { CallToAction } from "../components/homeComponents/CallToAction";
+import { CallToAction } from "../components/homeComponents/CallToAction.jsx";
 
 import {Footer} from "../components/Footer";
 import {Navbar} from "../components/Navbar";

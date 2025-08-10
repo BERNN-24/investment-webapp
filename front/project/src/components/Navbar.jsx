@@ -39,6 +39,8 @@ export function Navbar(){
    
    
  </motion.nav>;
+
+
 }
 
 export default Navbar;

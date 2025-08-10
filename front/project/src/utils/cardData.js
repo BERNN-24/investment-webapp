@@ -1,0 +1,55 @@
+// components/planData.js
+
+const plans = [
+  
+  {
+    id: 1,
+    name: 'Regular',
+    minInvestment: 50,
+    maxInvestment: 499,
+    roi: 2,
+    color: 'border-[#D6B4FC] text-[#1F2937]',
+    bg: 'bg-white',
+    highlight: false,
+  },
+  {
+    id: 2,
+    name: 'Bronze',
+    minInvestment: 500,
+    maxInvestment: 4999,
+    roi: 2.5,
+    color: 'border-yellow-500 text-yellow-800',
+    bg: 'bg-yellow-50',
+    highlight: false,
+  },
+  {
+    id: 3,
+    name: 'Silver',
+    minInvestment: 5000,
+    maxInvestment: 9999,
+    roi: 3,
+    color: 'border-gray-400 text-gray-800',
+    bg: 'bg-gray-100',
+    highlight: false,
+  },
+  {
+    id: 4,
+    name: 'Gold',
+    minInvestment: 10000,
+    maxInvestment: 19999,
+    roi: 3.5,
+    color: 'border-amber-500 text-amber-700',
+    bg: 'bg-amber-50',
+    highlight: false,
+  },
+  {
+    id: 5,
+    name: 'Platinum',
+    minInvestment: 20000,
+    maxInvestment: null,
+    roi: 4,
+    color: 'text-white',
+    bg: 'bg-gradient-to-r from-[#7F00FF] to-[#E100FF]',
+    highlight: true,
+  },
+];

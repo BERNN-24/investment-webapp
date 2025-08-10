@@ -1,6 +1,15 @@
 import React, {useState} from "react";
+
+// DEPENDENCIES
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+//COMPONENTS 
 import Input from "../components/Input";
+import { useAuth } from "../hooks/Auth_Provider";
+// UTILS
 import { arePropertiesNotEmpty } from "../utils/objectCheck";
+// AVATARS
 import b1 from "../assets/B1.png";
 import b2 from "../assets/B2.png";
 import g1 from "../assets/g1.png";
@@ -13,8 +22,9 @@ const avatars =[
         {name: "girlTwo", src : g2},
      ]
 
-export default function Avatar (){;
-
+export default function Avatar (){
+    const {user , setUser} = useAuth();
+    const navigate = useNavigate();
     const [avatar, setAvatar] = useState({
         nickName : "",
         image : "",
@@ -86,14 +96,43 @@ export default function Avatar (){;
     }
 
 
-    function handleSubmit (){
-        const checkInput = arePropertiesNotEmpty(avatar);
-        console.log(checkInput);
-        if(!checkInput) {
-            setError("Kindly set your Nickname and Avatar");
-            return;
-        }
-        console.log("User and avatar inputed", avatar);        
+    async function handleSubmit (event){
+        event.preventDefault();
+        try{
+          if(!arePropertiesNotEmpty(avatar)) {
+            setError("Please fill in all fields");
+            return; 
+          }
+
+          // CREATING A FORMDATA TO B SENT TO DATABASE
+          const formData = new FormData();
+          formData.append("nickName", avatar.nickName);
+          formData.append("image", avatar.image);
+          formData.append("userId", user.id);
+
+
+          const result = await axios.post("http://localhost:3001/user/avatar", formData,{
+            headers: {
+              "Content-Type": "multipart/form-data",  
+            },
+            withCredentials: true,
+          });
+
+
+          if(result.status !== 200) throw new Error(result.data.message);
+          const {data} = result.data;
+          setUser((prevUser) => ({  
+            ...prevUser,
+            avatar: data.avatar,
+            nickName: data.nickName,
+          }));
+          setTimeout(() => {
+            navigate("/dashboard"); 
+          }, 2000);
+        } catch (error) {
+            setError(error.message || "An error occurred while setting the avatar.");
+        console.log("User and avatar inputed", avatar);  
+        }      
     }
 
     function handleSkip () {
@@ -160,10 +199,10 @@ export default function Avatar (){;
                     id={item.name}
                     src={item.src}
                     alt={item.name}
-                    className="w-full h-[60px] object-contain rounded"
+                    className="w-full h-[60px] object-contain rounded" 
                   />
                 </div>
-                ) 
+                )        
             })}
             </div>
 
