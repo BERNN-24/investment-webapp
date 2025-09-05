@@ -4,23 +4,28 @@ import { RequestTable } from "../../components/adminComponent/RequestTable";
 import { TableHeaders } from "../../components/TableHeaders";
 
 export function EditRequests (){
-      const [addReqData, setReqData] = useState(null);
+      const [addReqData, setReqData] = useState('');
       const [isLoading, setLoading] = useState(false);
       const [errorMessage, setErrorMessage] = useState(null);
 
       useEffect(()=>{
         const fetchAddRequest = async ()=> {
             try{
+                console.log("Edit request started.");
                 setLoading(true);
                 // Fetching the add requests from the server
                 const result = await axios.get("http://localhost:3001/admin/allRequests", {withCredentials:true});
                 if(result.status !== 200) throw new Error(result.data.message);
                 const {data} = result.data;
+                console.log(data);
                 setReqData(data);
             } catch (error) {
                 setErrorMessage(error.message);
             }finally {
-                setLoading(false);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 3000);
+                
             }
         }
         fetchAddRequest();
@@ -29,27 +34,31 @@ export function EditRequests (){
         <div>
             <h1> All Requests</h1>
 
-            {isLoading && <div>Loading...</div>}
-            {errorMessage && <div>Error: {errorMessage}</div>}
-            <div>
+            <div className="grid grid-cols-5">
+                  <TableHeaders header="DATE" />
+                <TableHeaders header = "User ID"/>
                 <TableHeaders header="TxnType" />
-                <TableHeaders header="Username" />
                 <TableHeaders header="Amount" />
                 <TableHeaders header="Actions" /> 
             </div>
-            {addReqData && addReqData.length > 0 ? (
-                <ul>
-                    {addReqData.map((request , index) => (      
-                        <li key={index}>
+
+            {isLoading && <div>Loading...</div>}
+            {errorMessage && <div>Error: {errorMessage}</div>}
+            
+            {!isLoading && addReqData && 
+                <>
+                {addReqData.length != 0 ? 
+                  addReqData.map((element , index) => (         
                              <RequestTable
-                               requests={request}
+                                key={index}
+                               request={element}
                             />
-                        </li>
-                    ))}
-                </ul>
-            ) : (
+                    ))
+             : 
                 <div>No requests available.</div>
-            )}
+                }
+                </> 
+            }
         </div>
       )
 

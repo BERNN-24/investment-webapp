@@ -3,14 +3,14 @@
 import React, {Suspense, useState} from 'react';
 
 import { useAuth } from '../../hooks/Auth_Provider';
-import { lazyLoad } from '../../hooks/LazyLoading';
 
 import { arePropertiesNotEmpty } from '../../utils/objectCheck';
 
 import axios from 'axios';
 
-const CryptoAddress = lazyLoad('./Deposit', 'CryptoAddress');
-const SelectAddress = lazyLoad('./Deposit', 'SelectAddress');
+import { CryptoAddress , SelectAddress } from './Deposit';
+
+import { MdCancel } from 'react-icons/md';
 
 
 const PricingCard = ({ plan }) => {
@@ -19,7 +19,6 @@ const PricingCard = ({ plan }) => {
       planName : "",
       crypto : "",
       amount : "",
-      txnType : "subscription",
     });
   const [addMessage, setAddMessage] = useState("");
   const [modal , toggleModal] = useState(false);
@@ -48,6 +47,7 @@ const PricingCard = ({ plan }) => {
 
     // HANDLES PLAN CHOOSING CLICK
     function handleClick(event){
+      console.log("Ï see click");
       event.preventDefault();
 
       setSelectValue((prevValue)=>{
@@ -81,6 +81,7 @@ const PricingCard = ({ plan }) => {
         const result = await axios.post("http://localhost:3001/user/addBalance", 
           {...selectValue,
             id : user.id,
+            txnType : "subscription",
           },
           { withCredentials: true }
         );
@@ -98,9 +99,7 @@ const PricingCard = ({ plan }) => {
   return (
 
 <div className="relative">
-  {addMessage && (
-    <div className="text-red-500 text-center mb-4">{addMessage}</div>
-  )}
+  {addMessage && (<div className="text-red-500 text-center mb-4 z-50">{addMessage}</div>)}
 
   <div
     id={plan.id}
@@ -126,21 +125,24 @@ const PricingCard = ({ plan }) => {
     </button>
   </div>
 
-  {modal && arePropertiesNotEmpty(priceInfo) && (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+  {modal &&  <div className="fixed inset-0 backdrop-blur-sm z-30"> </div>}
+  {modal &&  (
+    
+    <div className="fixed inset-0 bg-opacity-40 flex items-center justify-center w-2/4 z-50">
       <div className="bg-white rounded-xl p-6 max-w-lg w-full shadow-xl">
+        
         <div className="flex justify-between items-center mb-4">
           <p className="text-lg font-semibold text-[#1F2937]">
             {selectValue.planName.toUpperCase()} Subscription
           </p>
-          <button onClick={() => toggleModal(false)} className="text-gray-500 hover:text-gray-700">✖</button>
+          <button onClick={() => toggleModal(false)} className="text-gray-500 hover:text-gray-700"> <MdCancel /></button>
         </div>
-        <Suspense fallback={<div>Loading...</div>}>
+        <div>
           <SelectAddress
             selectValue={selectValue.crypto}
             onChange={handleChange}
           />
-        </Suspense>
+        </div>
 
         {showDetail && (
           <div>
@@ -156,9 +158,7 @@ const PricingCard = ({ plan }) => {
                 />
               </div>
               <div>
-                <Suspense fallback={<div>Loading...</div>}>
                   <CryptoAddress clickedCrypto={selectValue.crypto} />
-                </Suspense>
               </div>
             </div>
             <button

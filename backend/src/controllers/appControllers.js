@@ -2,14 +2,16 @@ import {registerService} from "../services/appServices.js";
 
 
 export async function userRegister (req,res){
-   
+//    WORK ON MY RETURN CODE FROM SQL.
+const {email,password} = req.body;
     try{
-        const response  = await registerService(req.body);
-        console.log(response);
+        const response  = await registerService(email,password);
+        const [user] = response;
+        console.log(user);
         // && response.id
         if(typeof response == "object"){
-            req.login(response,(err)=>{
-                 return  res.status(200).json({message:"Sucessful", user: response});
+            req.login(user,(err)=>{
+                 return  res.status(200).json({message:"Sucessful", user: user});
                  }) 
         }
     } catch (error){

@@ -1,7 +1,5 @@
 // components/planData.js
-
-const plans = [
-  
+const plans = [ 
   {
     id: 1,
     name: 'Regular',
@@ -53,3 +51,5 @@ const plans = [
     highlight: true,
   },
 ];
+
+export default plans;

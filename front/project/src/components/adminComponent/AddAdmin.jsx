@@ -44,9 +44,10 @@ export function AddAdmin (){
     }
     return (
         
-        <div>
+        <div className="container border rounded-lg">
+            <div>{message}</div>
             <div>
-                <h2> ADD NEW ADMIN </h2>
+                <p> ADD NEW ADMIN </p>
             </div>
             <div> 
             <Input
@@ -62,14 +63,6 @@ export function AddAdmin (){
                 type="password"
                 placeholder="INPUT PASSWORD"
                 value={admin.password}
-                onChange={handleChange}
-                required
-            />
-              <Input
-              name=""
-                type="email"
-                placeholder="EMAIL"
-                value={admin.email}
                 onChange={handleChange}
                 required
             />

@@ -49,7 +49,7 @@ function Login(){
                  if(result.status!= 201){
                 // CREATING A CUSTOM ERROR WITH THE RESPONSE GOTTEN FROM API CALL
                 const error = new Error(result.data.message); 
-                error.status(result.status);
+                error.status =(result.status);
                 throw error;
             }
             const {user} = result.data;
@@ -67,7 +67,7 @@ function Login(){
 
             catch(error) {
               // CHECKING IF ERROR IS RESULT OF ACCESS NOT GRANTED
-              if(error.status == 403){
+              if(error.statusCode == 403){
                 setErrorMessage(error.messagee)
                 setTimeout(()=>{
                   setErrorMessage(null);

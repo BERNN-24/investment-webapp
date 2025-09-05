@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import {motion} from "motion/react";
 // IMAGE IMPORTS
@@ -36,8 +36,15 @@ export function HomeAbout (){
     const navigate = useNavigate();
     const aboutImages = [{src:stock , name: "Stock"} ,{src:crypto , name : "Crypto"},{src : forex, name: "Forex"}]
 
+    useEffect(()=>{
+      aboutImages.forEach(src=>{
+        const img = new Image();
+        img.src = src
+      });
+    },[]);
+
     function handleClick (name){
-        navigate(`/about ?info=${name}`);
+        navigate(`/about?info=${name}`);
     }
 
     return (
@@ -49,7 +56,7 @@ export function HomeAbout (){
 >
   {aboutImages.map((item, index) => (
     <motion.div
-      key={item.name}
+      key={index}
       variants={aboutVariant}
       whileHover="hover"
       transition="transition"

@@ -1,17 +1,17 @@
 import bcrypt from "bcrypt";
 import {checkModel} from "../models/appModels.js";
 import { addUserModel } from "../models/appModels.js";
+import { newAdminModel } from "../models/adminModels.js";
 
 
 
 // REGISTER USERS 
-export async function registerService(body){
+export async function registerService(email,password ,role){
     const saltRound = 10;
-  try{
-    const {email,password} = body;
+  try{ 
     const result = await checkModel(email);
-    if (result) {
-       
+    
+    if (result.length !== 0) {
          const error = new Error ('!! User Found !!');
                 error.status = 401; 
                 throw error;
@@ -25,8 +25,12 @@ export async function registerService(body){
                 error.status = 500; 
                  reject(err) 
                  }
-            try
-            {
+            try {
+                if(role && role === "admin"){
+                    const newAdmin = await newAdminModel(email,hash,role);
+                    return resolve(newAdmin);
+                }
+                // SQL INSERT CODE
                 const newUser = await addUserModel(email,hash);
                 return resolve(newUser);
             }
@@ -34,7 +38,6 @@ export async function registerService(body){
             {
                 reject(dberror);
             }
-                // INSERT INTO USERS (email,hash)  sql code 
         })
      });
      console.log(response);

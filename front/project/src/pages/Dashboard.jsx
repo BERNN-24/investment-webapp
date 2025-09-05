@@ -4,12 +4,14 @@ import { useAuth } from "../hooks/Auth_Provider";
 import useUser from "../hooks/Usercontext.jsx";
 import axios from "axios";
 // COMPONENTS
+
 import {DashboardNavbar} from "../components/dashboardComponent/DashboardNavbar.jsx";
 import {Balance} from "../components/dashboardComponent/Balance.jsx";
 import {Transaction} from "../components/dashboardComponent/TransactionAction.jsx";
 import {PendingTransaction} from "../components/dashboardComponent/PendingTxn.jsx";
 import {PricingSection} from "../components/dashboardComponent/Prices.jsx";
 import {AllTransactions} from "../components/dashboardComponent/AllTransactions.jsx";
+
 function Dashboard(){
 
     const {user}= useAuth();
@@ -31,12 +33,11 @@ function Dashboard(){
 
                  if(result.status !=200) {
                     const error = new Error(result.data.message); 
-                    error.status(result.status);
+                    error.status=result.status;
                     throw error;
                  }
 
                  const {data} = result.data;
-                 console.log(data);
                  setUserData(data);
                  setThisUser(data);
             } catch (err){
@@ -54,28 +55,35 @@ function Dashboard(){
       return (
     <div className="min-h-screen bg-[#F9FAFB] text-[#1F2937] px-4 md:px-8 py-6">
   {/* CUSTOMIZE LOADING STATE */}
+      <DashboardNavbar avatar={user.avatarurl} username={user.display_name} />
   {isLoading && (
     <div className="flex items-center justify-center h-screen text-lg font-medium text-[#6B7280]">
-      Loading...
+       {/* NAVBAR */}
+     
+      <div className="flex justify-center text-16 bg-gray-300 animate-pulse">
+         Loading...
+      </div>
+     
     </div>
   )}
 
   {!isLoading && userData && (
-    <div className="max-w-7xl mx-auto space-y-10">
-      {/* NAVBAR */}
-      <DashboardNavbar avatar={user.id} username={user.username} />
-
+    <div className="mx-auto space-y-10">
+     
+  
       {/* BALANCE SECTION */}
       <section className="bg-[#D6B4FC] bg-opacity-30 shadow-md shadow-[#E2D6F3] rounded-2xl p-6">
         <Balance balance={userData.walletBalance} />
       </section>
-      {/* PRICES SECTION */}
-      <section>
-        <Prices />
-      </section>
+      
       {/* TRANSACTION ACTIONS */}
       <section className="bg-gradient-to-r from-[#7F00FF] to-[#E100FF] p-6 rounded-2xl text-white shadow-lg shadow-[#E2D6F3]">
         <Transaction balance={userData.walletBalance}/>
+      </section>
+
+      {/* PRICES SECTION */} 
+      <section className="">
+        <PricingSection />
       </section>
 
       {/* PENDING TRANSACTIONS */}
@@ -85,7 +93,7 @@ function Dashboard(){
 
       {/* ALL TRANSACTIONS - (If You Add It Later) */}
       <section className="bg-white rounded-2xl p-6 shadow-sm border border-[#E2D6F3]">
-        <AllTransactions transactions={userData.allTransactions} />
+        <AllTransactions transaction={userData.transactionHistory} />
       </section>
     </div>
   )}

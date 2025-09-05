@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 
-export function Balance (balance){
+export function Balance ({balance}){
     const [showBalance, setShowBalance] = useState(false);
+    
 
     function handleClick (event){
-        event.preventDefault();
+    console.log("Button Clicked");
         setShowBalance(!showBalance);
     }
 
@@ -30,7 +31,7 @@ export function Balance (balance){
 
         <div>
           <p className="text-4xl font-extrabold text-[#7F00FF] tracking-wide select-none transition-opacity duration-300 ease-in-out">
-            {showBalance ? `$${balance}` : "••••••"}
+            {showBalance ? `${balance}` : "••••••"}
           </p>
         </div>
       </div>

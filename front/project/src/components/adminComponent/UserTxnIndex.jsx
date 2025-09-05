@@ -1,28 +1,23 @@
-import React , {useState} from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
-
-export function UserTxnIndex({data , index}) {
+export function UserTxnIndex({txn , index , onClick , isLoad}) {
     
-    const navigate = useNavigate();
-
-        function handleClick() {
-        navigate(`/dashboard/admin/userTransaction/${data.userId}`);
-         }
 
     return (
-        <div>
-             <div key={data.userId}>
-                <div> {index} </div>
-                <div>{data.username}</div>
-                <div>{data.email}</div>
-                <div>{data.balance}</div>
-                <div> 
-                Check Transaction 
-                <button onClick={handleClick}>hello</button> 
-                </div>
-             
-            </div>
-        </div>
+         <div key={index} className="grid grid-cols-6 ">
+                            <div>{txn.txn_id}</div>
+                            <div>{txn.pending_id}</div>
+                            <div>{txn.amount}</div>
+                            <div>{txn.txn_type}</div>
+                            <div>{new Date(txn.date).toLocaleDateString()}</div>
+                            <div>{txn.status}</div>
+                            <div>
+                                 <button onClick={(e)=>{
+                                 e.preventDefault();
+                                     onClick(txn.txn_id)}} >
+                                 DELETE TXN   
+                                 </button> </div>
+                                 {isLoad && <div className="ml-4 w-4 h-4 border-3 border-y-transparent rounded-full animate-spin"> </div>}
+                        </div>
     );
 }

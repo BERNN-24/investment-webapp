@@ -1,6 +1,7 @@
 import React from "react";
 
 export function DashboardNavbar ({avatar, username}) {
+  console.log(username);
     return (
         <header className="flex items-center justify-between bg-white py-4 px-6 rounded-2xl shadow-md border border-[#E2D6F3] mb-4">
       {/* Avatar */}
@@ -9,7 +10,7 @@ export function DashboardNavbar ({avatar, username}) {
           {avatar?.[0]?.toUpperCase() ?? "U"}
         </div>
         <div className="text-[#1F2937] font-semibold text-lg">
-          Welcome, <span className="text-[#7F00FF]">{username}</span>
+          Welcome, <span className="text-red">{username}</span>
         </div>
       </div>
 

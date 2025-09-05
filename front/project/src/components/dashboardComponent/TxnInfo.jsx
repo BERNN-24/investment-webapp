@@ -1,20 +1,21 @@
-import React, {useState , lazy , Suspense} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 import { useAuth } from "../../hooks/Auth_Provider";
 
-import {lazyLoad} from "../../hooks/LazyLoading";
-
-// LAZY LOADING COMPONENTS
-
-const SelectAddress = lazyLoad("./Deposit","SelectAddress");
-
-const CryptoAddress = lazyLoad("./Deposit" , "CryptoAddress");
+// COMPONENTS
+import {SelectAddress} from "./Deposit";
+import {CryptoAddress} from "./Deposit";
+import { ModalHeader } from "./Deposit";
 // UTILS
 import { arePropertiesNotEmpty } from "../../utils/objectCheck";
 
-export function Add (){
+// ICONS
+import { MdCancel } from "react-icons/md";
+
+
+export function Add ({closeModal}){
 
     const {user} = useAuth();
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ export function Add (){
 
     function handleChange(event){
         const {name , value} = event.target;
+        console.log(value);
 
         setSelectValue((prevValue)=>{
           return {
@@ -62,7 +64,10 @@ export function Add (){
             );
 
             if(result.status !=200) throw new Error(result.data.message);
+
             setAddMessage(result.data.message);
+
+            
 
          } catch (error) {
 
@@ -71,20 +76,32 @@ export function Add (){
  
          } finally {
             setLoadingPost(false);
+
+            setTimeout(() => {
+              setAddMessage(null);
+            }, 3000);
             navigate("/dashboard");
+
          }
     }
 
     // RENDERING THE ADD COMPONENT
      return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#E2D6F3] max-w-md w-full mx-auto">
-      <Suspense fallback = {<div> Loading </div>}>
+    <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#E2D6F3]">
+     
+     {/* className="flex justify-between items-center mb-5" */}
+    <div className="flex justify-between items-center mb-5">
+      <span> <h3 className="text-lg font-semibold text-[#1F2937] mb-4">Select Your Cryptocurrency for Deposit.</h3></span>
+      <span onClick = {(event)=> closeModal(event)}> 
+        <MdCancel className="w-10 h-10 bg-black text-white"/>
+      </span>
+    </div>
+      <div>
          <SelectAddress 
       selectValue = {selectValue.crypto}
       onChange={handleChange}
       /> 
-      </Suspense>
-     
+      </div>
      
 
       {showDetail && (
@@ -104,11 +121,9 @@ export function Add (){
             />
             </div>
             <div>
-              <Suspense fallback={<div> loading</div>}>
                     <CryptoAddress 
                   clickedCrypto = {selectValue.crypto}
                   />
-              </Suspense>
             </div>
            
           </div>
@@ -128,7 +143,7 @@ export function Add (){
 
 
 
-export function Withdraw (balance){
+export function Withdraw ({balance,closeModal}){
     const {user} = useAuth();
     const [showDetail, setShowDetail] = useState(false);
     const [amount, setAmount] = useState(
@@ -146,7 +161,7 @@ export function Withdraw (balance){
 
     function handleChange(event){
         const {name , value} = event.target;
-
+        console.log(value);
         setAmount((prevValue)=>{
           return {
             ...prevValue,
@@ -185,18 +200,30 @@ export function Withdraw (balance){
         }
     }
 return (
-    <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#E2D6F3] max-w-md w-full mx-auto">
-
-     <Suspense fallback = {<div>Loading</div>}>
+    <div className="bg-white py-10 px-10 mt-10 rounded-2xl shadow-lg border border-[#E2D6F3]">
+{/*     
+     <ModalHeader
+     content = "Select Withdrawal Cryptocurrency"
+     onClick = {handleCloseModal}
+     /> */}
+     
+      <div className="flex justify-between items-center mb-5">
+      <span> <h3 className="text-lg font-semibold text-[#1F2937] mb-4">Select a cryptocurrency</h3></span>
+      <span onClick ={(event)=>{
+        event.preventDefault();
+        closeModal(event);
+      }}> <MdCancel className="w-6 h-6 bg-black text-white"/> </span>
+     </div>
+    <div className="mb-5">
        <SelectAddress
       selectValue = {amount.crypto}
       onChange = {handleChange}
       />
-    </Suspense>
+    </div>
 
       {showDetail && (
         <div className="bg-[#F9FAFB] p-4 rounded-xl shadow-inner border border-[#E2D6F3]">
-          {withdrawLoading && <div className="text-sm text-[#6B7280] mb-2">...Loading</div>}
+          {withdrawLoading && <div className="text-sm text-[#6B7280] mb-2 flex-justify-center items-center">...Loading</div>}
           {withdrawalMessage && <div className="text-sm text-[#7F00FF] font-medium mb-2">{withdrawalMessage}</div>}
 
           <div className="mb-4">

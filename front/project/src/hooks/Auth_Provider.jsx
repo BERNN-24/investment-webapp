@@ -1,4 +1,4 @@
-import React, {useContext,useState,useEffect,createContext} from "react";
+import React, {useContext, useState, useEffect, createContext} from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -14,6 +14,7 @@ export function AuthProvider ( {children}) {
      const [isLoading,setLoading] = useState(true);
     //  ON HARD RELOAD IF IT IS STILL IN THE DASHBOARD, IT GOES TO BACKEND TO CHECK IF *session* STILL ACTIVE.
     useEffect( ()=>{
+        console.log("Auth Provider useEffect called");
       const reloadAuth =  async ()=>{
             try{
                 const response = await axios.get("/verifyAuth", {withCredentials:true})
